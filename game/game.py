@@ -7,6 +7,8 @@ import tkinter as tk
 from game.player import Player
 from game.maps import AVAILABLE_MAPS
 import config
+import pygame
+pygame.mixer.init()
 
 class Game:
     """Classe principale gérant le déroulement du jeu"""
@@ -105,7 +107,9 @@ class Game:
 
         # Touches pressées
         self.keys_pressed = set()
-
+        self.typed_text=""
+        self.punch_sound = pygame.mixer.Sound("game\son\punch.wav")
+        
         # Unbind les événements globaux d'Echap pour éviter les conflits
         self.root.unbind('<Escape>')
 
@@ -116,6 +120,7 @@ class Game:
         # Lancer la boucle de jeu
         self.game_loop()
 
+    
     def find_spawn_platform(self):
         """Trouve la plateforme de spawn (la plus basse et la plus large)
 
@@ -145,6 +150,24 @@ class Game:
         """
         key = event.keysym
         self.keys_pressed.add(key)
+
+        print("TOUCHE:", event.char, event.keysym)
+        if event.char:
+            print("CHAR DÉTECTÉ :", event.char)
+
+        # --- Détection du mot "michou" ---
+        char = event.char.lower()
+
+        # On accepte uniquement les vraies lettres
+        if char.isalpha():
+            self.typed_text += char
+            self.typed_text = self.typed_text[-20:]  # on garde les 20 derniers caractères
+
+            # Détection ultra propre : déclenche uniquement quand tu écris vraiment "michou"
+            if self.typed_text.endswith("e"):
+                self.punch_sound.play()
+            if self.typed_text.endswith("enter"):
+                self.punch_sound.play()
 
         # Gestion de la confirmation de sortie
         if self.quit_confirmation:
