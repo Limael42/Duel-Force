@@ -1,0 +1,16 @@
+{
+    "player1": {
+        "left": "q",
+        "right": "d",
+        "jump": "z",
+        "attack": "a",
+        "special": "e"
+    },
+    "player2": {
+        "left": "Left",
+        "right": "Right",
+        "jump": "Up",
+        "attack": "space",
+        "special": "Return"
+    }
+}
