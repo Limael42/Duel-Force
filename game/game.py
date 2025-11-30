@@ -7,6 +7,8 @@ import tkinter as tk
 from game.player import Player
 from game.maps import AVAILABLE_MAPS
 import config
+import pygame
+pygame.mixer.init()
 
 class Game:
     """Classe principale gérant le déroulement du jeu"""
